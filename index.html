@@ -76,6 +76,7 @@
         .initial-page.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
 
         .love-button {
@@ -122,8 +123,9 @@
         /* Página principal */
         .main-content {
             opacity: 0;
+            visibility: hidden;
             transform: translateY(20px);
-            transition: opacity 1s, transform 1s;
+            transition: opacity 1s, transform 1s, visibility 0s 1s;
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
@@ -145,7 +147,9 @@
 
         .main-content.show {
             opacity: 1;
+            visibility: visible;
             transform: translateY(0);
+            transition: opacity 1s, transform 1s, visibility 0s;
         }
 
         /* Player de música */
@@ -1145,8 +1149,35 @@
     </div>
 
     <script>
-     // Elementos DOM
-     const playPauseBtn = document.getElementById('playPauseBtn');
+        // Elementos DOM para a transição inicial
+        const initialPage = document.getElementById('initialPage');
+        const loveButton = document.getElementById('loveButton');
+        const mainContent = document.getElementById('mainContent');
+        
+        // Adiciona evento de clique ao botão
+        loveButton.addEventListener('click', function() {
+            // Esconde a página inicial
+            initialPage.classList.add('hidden');
+            
+            // Mostra o conteúdo principal após um pequeno atraso
+            setTimeout(function() {
+                mainContent.classList.add('show');
+            }, 500);
+            
+            // Toca a música automaticamente (com tratamento para autoplay policies)
+            const song = document.getElementById('song');
+            const playPromise = song.play();
+            
+            // Em navegadores que não permitem autoplay
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay não permitido. O usuário precisa interagir primeiro.');
+                });
+            }
+        });
+
+        // Elementos DOM para o player de música
+        const playPauseBtn = document.getElementById('playPauseBtn');
         const song = document.getElementById('song');
         const playIcon = playPauseBtn.querySelector('i');
         const progressBar = document.querySelector('.progress-bar');

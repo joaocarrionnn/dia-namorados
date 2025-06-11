@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Amor da Minha Vida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e estilos globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #0a0a12;
+            color: #e0e0f0;
+            overflow-x: hidden;
+            transition: all 0.5s ease;
+            line-height: 1.6;
+        }
+
+        /* Efeitos de iluminação */
+        .glow-effect {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 60, 60, 0.15) 0%, rgba(255, 60, 60, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-1 {
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glow-2 {
+            bottom: 15%;
+            right: 10%;
+            animation: float 10s ease-in-out infinite 2s;
+        }
+
+        /* Página inicial */
+        .initial-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0a18 0%, #1a0a1a 100%);
+            z-index: 1000;
+            transition: opacity 1s, visibility 1s;
+            overflow: hidden;
+        }
+
+        .initial-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            opacity: 0.08;
+            z-index: -1;
+        }
+
+        .initial-page.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .love-button {
+            position: relative;
+            padding: 18px 36px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffd6d6;
+            background-color: rgba(255, 60, 60, 0.2);
+            border: 2px solid rgba(255, 90, 90, 0.5);
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(255, 60, 60, 0.3),
+                        0 0 30px rgba(255, 60, 60, 0.2),
+                        inset 0 0 10px rgba(255, 120, 120, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .love-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 100, 100, 0.3) 0%, rgba(255, 100, 100, 0) 70%);
+            transform: translate(25%, 25%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .love-button:hover {
+            background-color: rgba(255, 60, 60, 0.3);
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.4),
+                        0 0 40px rgba(255, 60, 60, 0.3),
+                        inset 0 0 15px rgba(255, 120, 120, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Página principal */
+        .main-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s, transform 1s;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .main-content::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .main-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Player de música */
+        .music-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: rgba(20, 20, 30, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 90, 90, 0.1);
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-player::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 60, 60, 0.05) 0%, rgba(255, 60, 60, 0) 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .album-cover {
+            width: 220px;
+            height: 220px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(255, 90, 90, 0.2);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .album-cover:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
+                        0 0 0 1px rgba(255, 90, 90, 0.3);
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .song-title {
+            font-size: 26px;
+            color: #ff6b6b;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 90, 90, 0.3);
+        }
+
+        .song-artist {
+            font-size: 18px;
+            color: #b0b0d0;
+            letter-spacing: 0.5px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .play-pause {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ff4d4d, #e64444);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 60, 60, 0.4),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-pause::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: translate(25%, 25%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .play-pause:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6),
+                        inset 0 3px 6px rgba(255, 255, 255, 0.3);
+        }
+
+        .play-pause:hover::before {
+            opacity: 1;
+        }
+
+        /* Seção de título */
+        .title-section {
+            text-align: center;
+            margin: 60px 0;
+            animation: slideUp 1s ease-out;
+            position: relative;
+        }
+
+        .title-section::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 90, 90, 0.4);
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff4d4d, transparent);
+            opacity: 0.6;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #d0d0f0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Galeria de fotos */
+        .memories-section {
+            margin: 80px 0;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff4d4d, transparent);
+        }
+
+        .section-title::after {
+            content: '♥';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff4d4d;
+            font-size: 1.2rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .memory-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+            height: 350px;
+            perspective: 1000px;
+        }
+
+        .memory-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 60, 60, 0.3);
+        }
+
+        .memory-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .memory-item:hover .memory-image {
+            transform: scale(1.1) rotate(1deg);
+        }
+
+        .memory-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(10, 10, 20, 0.9));
+            padding: 25px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .memory-item:hover .memory-caption {
+            transform: translateY(0);
+        }
+
+        .memory-date {
+            font-size: 1rem;
+            color: #ff8a8a;
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .memory-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Seção de vídeo */
+        .video-section {
+            margin: 80px 0;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 90, 90, 0.2);
+            transition: transform 0.5s;
+        }
+
+        .video-container:hover {
+            transform: scale(1.02);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Mensagem final */
+        .final-message {
+            text-align: center;
+            margin: 100px 0;
+            padding: 50px;
+            background: rgba(20, 20, 30, 0.7);
+            border-radius: 15px;
+            animation: fadeIn 2s ease-out;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 90, 90, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 60, 60, 0.05) 0%, rgba(255, 60, 60, 0) 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .final-title {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 90, 90, 0.3);
+        }
+
+        .final-text {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #d0d0f0;
+            opacity: 0.9;
+        }
+
+        .heart {
+            color: #ff4d4d;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(255, 90, 90, 0.5);
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10px, 10px); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .final-title {
+                font-size: 2.2rem;
+            }
+            
+            .final-text {
+                font-size: 1.1rem;
+            }
+            
+            .love-button {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .music-player {
+                padding: 20px;
+            }
+            
+            .album-cover {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        /* Estilos da Carta de Amor */
+.love-letter {
+    margin: 100px 0;
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+    animation: fadeIn 2s ease-out;
+}
+
+.letter-container {
+    width: 100%;
+    max-width: 700px;
+    background: linear-gradient(135deg, #1a0a1a 0%, #0a0a18 100%);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 90, 90, 0.2),
+                inset 0 0 20px rgba(255, 90, 90, 0.1);
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.letter-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    opacity: 0.03;
+    z-index: -1;
+}
+
+.letter-content {
+    position: relative;
+    z-index: 2;
+}
+
+.letter-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-style: italic;
+    color: #b0b0d0;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed rgba(255, 90, 90, 0.3);
+    padding-bottom: 10px;
+}
+
+.letter-salutation {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.letter-salutation h3 {
+    font-size: 1.8rem;
+    color: #ff6b6b;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.underline {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff4d4d, transparent);
+    opacity: 0.7;
+}
+
+.letter-body {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #d0d0f0;
+    margin-bottom: 40px;
+}
+
+.letter-body p {
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.highlighted {
+    font-style: italic;
+    color: #ff8a8a;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 30px 0;
+    position: relative;
+}
+
+.highlighted::before, .highlighted::after {
+    content: '"';
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    opacity: 0.7;
+}
+
+.letter-closing {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 50px;
+}
+
+.signature {
+    flex: 1;
+}
+
+.signature p {
+    color: #b0b0d0;
+    margin-bottom: 5px;
+}
+
+.signature-line {
+    width: 150px;
+    height: 1px;
+    background-color: rgba(255, 90, 90, 0.5);
+    margin: 10px 0;
+}
+
+.signature-name {
+    font-weight: bold;
+    color: #ff6b6b !important;
+    font-size: 1.2rem;
+}
+
+.seal {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seal-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 60, 60, 0.2) 0%, rgba(255, 60, 60, 0) 70%);
+    border: 2px dashed rgba(255, 90, 90, 0.5);
+    animation: rotate 20s linear infinite;
+}
+
+.seal-heart {
+    position: absolute;
+    font-size: 2rem;
+    color: #ff4d4d;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .letter-container {
+        padding: 20px;
+    }
+    
+    .letter-header {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .letter-salutation h3 {
+        font-size: 1.5rem;
+    }
+    
+    .letter-body {
+        font-size: 1rem;
+    }
+    
+    .highlighted {
+        font-size: 1.1rem;
+    }
+    
+    .seal {
+        width: 60px;
+        height: 60px;
+    }
+}
+ /* Estilo do player horizontal */
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .horizontal-player {
+            display: flex;
+            width: 800px;
+            background: #191414;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .album-cover-container {
+            width: 300px;
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .album-cover {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .player-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .song-info {
+            margin-bottom: 20px;
+        }
+        
+        .song-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 5px 0;
+        }
+        
+        .song-artist {
+            font-size: 16px;
+            color: #b3b3b3;
+            margin: 0;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: #535353;
+            border-radius: 3px;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #1DB954;
+            border-radius: 3px;
+            position: relative;
+            transition: width 0.1s linear;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -3px;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .progress-container:hover .progress-bar::after {
+            opacity: 1;
+        }
+        
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #b3b3b3;
+            margin-bottom: 25px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .main-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.2s;
+        }
+        
+        .control-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            color: #1DB954;
+        }
+        
+        .play-pause {
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+        
+        .play-pause:hover {
+            transform: scale(1.05);
+            background: #1DB954;
+            color: white;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-bar {
+            width: 100px;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
+        .volume-progress {
+            height: 100%;
+            width: 80%;
+            background: white;
+            border-radius: 2px;
+        }
+        
+        .spotify-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+        }
+        
+        /* Efeitos de animação */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .playing .album-cover {
+            animation: pulse 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Efeitos de iluminação -->
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+
+    <!-- Página inicial com botão -->
+    <div class="initial-page" id="initialPage">
+        <button class="love-button" id="loveButton">Clique Aqui, Meu Amor</button>
+    </div>
+
+    <!-- Conteúdo principal (inicialmente oculto) -->
+    <div class="main-content" id="mainContent">
+ <!-- Player Horizontal -->
+ <div class="horizontal-player">
+    <svg class="spotify-logo" viewBox="0 0 24 24" fill="#1DB954">
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+    </svg>
+    
+    <div class="album-cover-container">
+        <img src="https://i.scdn.co/image/ab67616d0000b2731d7e26119d1a6648e34dc51c" alt="Capa do Álbum" class="album-cover">
+    </div>
+    
+    <div class="player-content">
+        <div class="song-info">
+            <h2 class="song-title">I Really Want to Stay at Your House</h2>
+            <p class="song-artist">Rosa Walton & Hallie Coggins</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            
+            <div class="time-info">
+                <span class="current-time">0:00</span>
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="main-controls">
+                <button class="control-btn">
+                    <i class="fas fa-random"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="play-pause" id="playPauseBtn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+            
+            <div class="volume-control">
+                <i class="fas fa-volume-down"></i>
+                <div class="volume-bar">
+                    <div class="volume-progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="song" preload="metadata">
+        <!-- Substitua por um link de áudio válido -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+</div>
+
+        <!-- Seção de título -->
+        <div class="title-section">
+            <h1 class="main-title">Para o Amor da Minha Vida</h1>
+            <p class="subtitle">"Cada momento ao seu lado é um presente que eu guardo no meu coração. Você é a razão do meu sorriso e a luz que ilumina meus dias."</p>
+        </div>
+
+        <!-- Galeria de memórias -->
+        <div class="memories-section">
+            <h2 class="section-title">Nossas Memórias</h2>
+            <div class="gallery">
+                <div class="memory-item">
+                    <img src="Firefly 20240519113926 (3).jpg" alt="Nossa primeira foto" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Quando nos assumimos</div>
+                        <div class="memory-description">O dia em que decidimos contar pra todo mundo que estavamos juntos.</div>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="IMG-20240506-WA0024.jpg" alt="Viagem à praia" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Dias na Escola</div>
+                        <div class="memory-description">Por mais que a escola seja um saco, você fez a escola pra mim um lugar que quero ir todo dia so porque você está lá</div>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="jantar.png" alt="Jantar romântico" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Jantar </div>
+                        <div class="memory-description">O dia que tivemos o melhor jantar de nossas vidas!!.</div>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="academia.png" alt="Passeio nas montanhas" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Academia</div>
+                        <div class="memory-description">Cada dia nos dois se esforçando o maximo na academia um pro outro.</div>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="eucaristia .png" alt="Inverno juntos" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Eucaristias</div>
+                        <div class="memory-description">Gracas a você me aproximei mais de Deus!!.</div>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="foto.jpg" alt="Aniversário" class="memory-image">
+                    <div class="memory-caption">
+                        <div class="memory-date">Nossos Momentos</div>
+                        <div class="memory-description">O dia que tiramos uma fotona juntoss , tu ta uma gatona momo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de vídeo -->
+        <div class="video-section">
+            <h2 class="section-title">Nossos Momentos</h2>
+            <div class="video-container">
+                <video controls poster="video.mp4">
+                    <source src="video.mp4" type="video/mp4">
+                    Seu navegador não suporta o elemento de vídeo.
+                </video>
+            </div>
+        </div>
+
+        <!-- Mensagem final como carta -->
+<div class="love-letter">
+    <div class="letter-container">
+        <div class="letter-content">
+            <div class="letter-header">
+                <span class="letter-date">12 de Junho de 2025</span>
+                <span class="letter-location">Para onde quer que você vá</span>
+            </div>
+            
+            <div class="letter-salutation">
+                <h3>Meu Amor,</h3>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="letter-body">
+                <p>
+                    Quando tento encontrar palavras para descrever o que sinto por você, 
+                    percebo que nenhuma delas é suficiente. Você é a pessoa mais 
+                    incrível que já conheci e sou grato todos os dias por ter você ao meu lado.
+                </p>
+                
+                <p>
+                    Cada riso seu ilumina meu dia. Cada olhar seu aquece meu coração. 
+                    Cada momento contigo é um presente que guardo com carinho na memória.
+                </p>
+                
+                <p>
+                    Prometo continuar fazendo você feliz, te surpreendendo todos os dias 
+                    e amando você mais do que ontem, mas menos do que amanhã.
+                </p>
+                
+                <p class="highlighted">
+                    Você é meu tudo, minha razão, meu maior amor.
+                </p>
+            </div>
+            
+            <div class="letter-closing">
+                <div class="signature">
+                    <p>Para sempre seu,</p>
+                    <div class="signature-line"></div>
+                    <p class="signature-name">[João Carrion]</p>
+                </div>
+                <div class="seal">
+                    <div class="seal-circle"></div>
+                    <span class="seal-heart">♥</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <script>
+     // Elementos DOM
+     const playPauseBtn = document.getElementById('playPauseBtn');
+        const song = document.getElementById('song');
+        const playIcon = playPauseBtn.querySelector('i');
+        const progressBar = document.querySelector('.progress-bar');
+        const currentTimeDisplay = document.querySelector('.current-time');
+        const durationDisplay = document.querySelector('.duration');
+        const player = document.querySelector('.horizontal-player');
+        const volumeProgress = document.querySelector('.volume-progress');
+        const volumeBar = document.querySelector('.volume-bar');
+        
+        // Configuração inicial do volume
+        song.volume = 0.8;
+        
+        // Atualizar tempo da música
+        function updateProgress() {
+            const progress = (song.currentTime / song.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Formatando o tempo atual
+            let currentMinutes = Math.floor(song.currentTime / 60);
+            let currentSeconds = Math.floor(song.currentTime % 60);
+            if(currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+            currentTimeDisplay.textContent = `${currentMinutes}:${currentSeconds}`;
+        }
+        
+        // Definir duração da música quando os metadados estiverem carregados
+        song.addEventListener('loadedmetadata', function() {
+            let durationMinutes = Math.floor(song.duration / 60);
+            let durationSeconds = Math.floor(song.duration % 60);
+            if(durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
+            durationDisplay.textContent = `${durationMinutes}:${durationSeconds}`;
+        });
+        
+        // Clique na barra de progresso
+        document.querySelector('.progress-container').addEventListener('click', function(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = song.duration;
+            song.currentTime = (clickX / width) * duration;
+        });
+        
+        // Controle play/pause
+        playPauseBtn.addEventListener('click', function() {
+            if (song.paused) {
+                song.play()
+                    .then(() => {
+                        playIcon.classList.remove('fa-play');
+                        playIcon.classList.add('fa-pause');
+                        player.classList.add('playing');
+                    })
+                    .catch(e => console.log('Erro ao reproduzir:', e));
+            } else {
+                song.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                player.classList.remove('playing');
+            }
+        });
+        
+        // Atualizar progresso enquanto a música toca
+        song.addEventListener('timeupdate', updateProgress);
+        
+        // Resetar quando a música terminar
+        song.addEventListener('ended', function() {
+            playIcon.classList.remove('fa-pause');
+            playIcon.classList.add('fa-play');
+            progressBar.style.width = '0%';
+            player.classList.remove('playing');
+        });
+        
+        // Controle de volume
+        volumeBar.addEventListener('click', function(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const volume = clickX / width;
+            song.volume = volume;
+            volumeProgress.style.width = `${volume * 100}%`;
+            
+            // Atualizar ícone do volume
+            const volumeIcon = this.previousElementSibling;
+            if (volume === 0) {
+                volumeIcon.classList.remove('fa-volume-down');
+                volumeIcon.classList.add('fa-volume-mute');
+            } else {
+                volumeIcon.classList.remove('fa-volume-mute');
+                volumeIcon.classList.add('fa-volume-down');
+            }
+        });
+        
+        // Botões adicionais (funcionalidade básica)
+        document.querySelector('.fa-step-forward').addEventListener('click', function() {
+            song.currentTime += 10; // Avança 10 segundos
+        });
+        
+        document.querySelector('.fa-step-backward').addEventListener('click', function() {
+            song.currentTime -= 10; // Retrocede 10 segundos
+        });
+        
+        document.querySelector('.fa-redo').addEventListener('click', function() {
+            song.currentTime = 0;
+            if (song.paused) song.play();
+        });
+        
+        document.querySelector('.fa-random').addEventListener('click', function() {
+            alert('Funcionalidade de shuffle seria implementada aqui');
+        });
+    </script>
+</body>
+</html>
